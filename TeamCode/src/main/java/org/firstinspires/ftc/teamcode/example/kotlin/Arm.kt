@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.example.kotlin
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
 import com.rowanmcalpin.nextftc.core.command.utility.InstantCommand
@@ -7,15 +8,15 @@ import com.rowanmcalpin.nextftc.core.control.controllers.PIDFController
 import com.rowanmcalpin.nextftc.ftc.hardware.controllables.MotorEx
 import com.rowanmcalpin.nextftc.ftc.hardware.controllables.RunToPosition
 
-object Lift: Subsystem() {
+object Arm: Subsystem() {
     lateinit var motor: MotorEx
 
     val controller = PIDFController(0.005, 0.0, 0.0)
 
     val resetZero: Command
-        get() = InstantCommand({ motor.resetEncoder() })
+        get() = InstantCommand { motor.resetEncoder() }
 
-    val name = "lift_motor"
+    val name = "arm" //Name of the motor on the config
 
     val toLow: Command
         get() = RunToPosition(motor, // MOTOR TO MOVE
@@ -37,5 +38,6 @@ object Lift: Subsystem() {
 
     override fun initialize() {
         motor = MotorEx(name)
+        //motor.direction = REVERSE // TODO Set the direction of the motor if needed
     }
 }

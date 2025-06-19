@@ -8,18 +8,18 @@ import com.rowanmcalpin.nextftc.core.command.utility.delays.Delay
 import com.rowanmcalpin.nextftc.ftc.NextFTCOpMode
 
 @Autonomous(name = "NextFTC Autonomous Program Kotlin")
-class AutonomousProgram: NextFTCOpMode(Claw, Lift) {
+class AutonomousProgram: NextFTCOpMode(Claw, Arm) {
     val firstRoutine: Command
         get() = SequentialGroup(
-            Lift.toHigh,
+            Arm.toHigh,
             ParallelGroup(
-                Lift.toMiddle,
+                Arm.toMiddle,
                 Claw.close
             ),
             Delay(0.5),
             ParallelGroup(
                 Claw.open,
-                Lift.toLow
+                Arm.toLow
             )
         )
 
