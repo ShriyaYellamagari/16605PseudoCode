@@ -7,6 +7,11 @@ import com.pedropathing.util.CustomPIDFCoefficients;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class FConstants {
+    // TODO: Follow this for the drive tuning https://pedropathing.com/overview.html
+    // Video of tuning process but slightly outdated:https://www.youtube.com/watch?v=3EXX5_KwfVM
+    // You want to use gobilda pinpoint odometry wheels for the localization
+    // https://www.gobilda.com/4-bar-odometry-pack-2-pods-1-pinpoint-computer/
+    // Use these wheels: https://www.gobilda.com/gripforce-mecanum-wheel-set-o104mm-40a-durometer-rollers/
     static {
         FollowerConstants.localizers = Localizers.THREE_WHEEL;
 

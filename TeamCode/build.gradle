@@ -27,6 +27,8 @@ android {
     }
 }
 
+// TODO: Install sloth for fast downloads https://github.com/Dairy-Foundation/Sloth
+
 dependencies {
     implementation project(':FtcRobotController')
 }
