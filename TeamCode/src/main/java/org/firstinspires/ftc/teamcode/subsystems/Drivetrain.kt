@@ -17,11 +17,13 @@ object Drivetrain : Subsystem() {
         rearLeft = OpModeData.hardwareMap.get(DcMotor::class.java, "rearLeft")
         rearRight = OpModeData.hardwareMap.get(DcMotor::class.java,"rearRight")
 
+        //Motor directions
         frontLeft.direction = DcMotorSimple.Direction.REVERSE
         frontRight.direction = DcMotorSimple.Direction.REVERSE
         rearLeft.direction = DcMotorSimple.Direction.FORWARD
         rearRight.direction = DcMotorSimple.Direction.FORWARD
 
+        //Brake when power = 0
         frontLeft.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         frontRight.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rearLeft.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
@@ -29,7 +31,7 @@ object Drivetrain : Subsystem() {
 
     }
 
-    fun drive(axial: Double, lateral: Double, yaw: Double) {
+    fun drive (axial: Double, lateral: Double, yaw: Double) {
 
         // Mecanum Drive Calculation (frontLeft, frontRight, rearLeft, rearRight)
         var fl = axial + lateral + yaw
@@ -53,5 +55,4 @@ object Drivetrain : Subsystem() {
         rearLeft.power = rl
         rearRight.power = rr
     }
-
 }

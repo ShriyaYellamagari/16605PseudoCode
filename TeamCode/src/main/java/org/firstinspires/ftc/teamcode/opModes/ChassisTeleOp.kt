@@ -1,3 +1,4 @@
+//Chassis TeleOp Test - No Odomery
 package org.firstinspires.ftc.teamcode.opModes
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -10,7 +11,6 @@ class ChassisTeleOp : NextFTCOpMode(Drivetrain) {
         while (opModeIsActive()) {
 
             // GAMEPAD INPUT
-
             // Read joystick inputs (Pushing the left stick forward gives a negative Y value.)
             val axial = -gamepad1.left_stick_y.toDouble()
             val lateral = gamepad1.left_stick_x.toDouble()
@@ -20,7 +20,6 @@ class ChassisTeleOp : NextFTCOpMode(Drivetrain) {
 
             //CALL FUNCTION from Subsystem with all motor math
             Drivetrain.drive(axial, lateral, yaw)
-
 
             telemetry.addData("Axial", axial)
             telemetry.addData("Lateral", lateral)
