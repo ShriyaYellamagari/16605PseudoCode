@@ -1,28 +1,38 @@
-/*package org.firstinspires.ftc.teamcode.subsystems
+package org.firstinspires.ftc.teamcode.subsystems
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.rowanmcalpin.nextftc.core.Subsystem
-import com.rowanmcalpin.nextftc.core.command.Command
-import com.rowanmcalpin.nextftc.core.command.utility.InstantCommand
 import com.rowanmcalpin.nextftc.ftc.OpModeData
 
-object Outake: Subsystem() {
-    lateinit var outtake1 : DcMotor
-    lateinit var outtake2 : DcMotor
+object Outake : Subsystem() {
 
-    /*You can add commands to control the intake servo like reverse and stop
-    These commands are basic and just turn the servo on.
-    You can have a command to automatically stop the servo after a color/distance sensor detects an object https://nextftc.dev/concepts/commands
-    https://www.revrobotics.com/rev-31-1557/?searchid=4551615&search_query=color+sensor or https://docs.brushlandlabs.com/sensors/color-rangefinder
-    are good color/distance sensors to use
-     */
-    val on: Command
-        get() = InstantCommand{servo.power = 1.0} // Set the servo to full power to intake
+    lateinit var motor1: DcMotor
+    lateinit var motor2: DcMotor
+
+    private const val OUTTAKE_POWER = 0.9
+
 
     override fun initialize() {
-        servo = OpModeData.hardwareMap.get(CRServo::class.java, "intake")
+        motor1 = OpModeData.hardwareMap.get(DcMotor::class.java, "motor1")
+        motor2 = OpModeData.hardwareMap.get(DcMotor::class.java, "motor2")
 
-        //servo.direction = Servo.Direction.REVERSE //TODO: Reverse the direction of the servo if needed
+        // Set directions — change if needed
+        motor1.direction = DcMotorSimple.Direction.FORWARD
+        motor2.direction = DcMotorSimple.Direction.REVERSE  // ← FIX for opposite spinning
+
+        motor1.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        motor2.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
     }
-}*/
+
+    fun outtake() {
+        motor1.power = OUTTAKE_POWER
+        motor2.power = OUTTAKE_POWER
+    }
+
+
+    fun stop() {
+        motor1.power = 0.0
+        motor2.power = 0.0
+    }
+}
