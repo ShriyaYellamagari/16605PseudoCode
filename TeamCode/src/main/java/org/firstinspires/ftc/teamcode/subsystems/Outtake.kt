@@ -30,7 +30,6 @@ object Outake : Subsystem() {
         motor2.power = OUTTAKE_POWER
     }
 
-
     fun stop() {
         motor1.power = 0.0
         motor2.power = 0.0
