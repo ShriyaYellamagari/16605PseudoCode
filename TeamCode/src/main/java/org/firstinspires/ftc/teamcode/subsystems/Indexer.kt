@@ -26,9 +26,14 @@ object Indexer : Subsystem() {
         ArtifactColor.NONE
         )
 
+
     override fun initialize() {
         indexerMotor = OpModeData.hardwareMap.get(DcMotor::class.java, "indexerMotor")
         colorSensor = OpModeData.hardwareMap.get(ColorSensor::class.java, "colorSensor")
+
+        indexerMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        indexerMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        indexerMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
     }
 
     fun getColorValues(): String {
@@ -38,6 +43,7 @@ object Indexer : Subsystem() {
 
         return "R:$red G:$green B:$blue"
     }
+
 
     fun detectArtifactColor(): ArtifactColor {
         val red = colorSensor.red()
@@ -71,6 +77,7 @@ object Indexer : Subsystem() {
         return ArtifactColor.NONE
     }
 
+
     fun slotForColor (color: ArtifactColor): Int {
         //slot 0 - purple1
         //slot 1 - purple2
@@ -97,13 +104,43 @@ object Indexer : Subsystem() {
         }
     }
 
+
+
     fun rotateToSlot(indexerSlot: Int) {
         if (indexerSlot < 0 || indexerSlot > 2) return
+
+        val slotsToMove = (indexerSlot - initialSlot + 3) % 3
+
+        if (slotsToMove == 0) return
+
+        val ticksPerSlot = 300 // CHANGE?!!!
+        val targetPosition = indexerMotor.currentPosition + (slotsToMove * ticksPerSlot)
+
+        indexerMotor.targetPosition = targetPosition
+        indexerMotor.mode = DcMotor.RunMode.RUN_TO_POSITION
+        indexerMotor.power = 0.5
+
+        initialSlot = indexerSlot
+    }
+
+
+    fun incomingBall() {
+        val detectedColor = detectArtifactColor()
+
+        if (detectedColor == ArtifactColor.NONE) {
+            return
+        }
+
+        val targetSlot = slotForColor(detectedColor)
+
+        // If indexer is full(no empty slots), do nothing
+        if (targetSlot == -1) {
+            return //could change later to make the intake spin out to make ball exit
+        }
+
+        rotateToSlot(targetSlot)
+
+        slotContents[targetSlot] = detectedColor
     }
 
 }
-
-
-
-
-

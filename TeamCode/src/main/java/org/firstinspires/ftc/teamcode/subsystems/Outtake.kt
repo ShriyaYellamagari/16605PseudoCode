@@ -12,7 +12,6 @@ object Outake : Subsystem() {
 
     private const val OUTTAKE_POWER = 0.9
 
-
     override fun initialize() {
         motor1 = OpModeData.hardwareMap.get(DcMotor::class.java, "motor1")
         motor2 = OpModeData.hardwareMap.get(DcMotor::class.java, "motor2")
